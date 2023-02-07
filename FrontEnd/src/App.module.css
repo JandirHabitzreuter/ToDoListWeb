@@ -1,0 +1,10 @@
+.app {
+    max-width: 46rem;
+    margin: 0rem auto;
+  }
+  
+  @media (max-width: 768px) {
+    html {
+      font-size: 87.5%;
+    }
+  }
