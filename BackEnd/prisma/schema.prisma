@@ -9,3 +9,8 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Todolist {
+  id          String @id @default(uuid())
+  description String
+}
