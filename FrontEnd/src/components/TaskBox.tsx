@@ -1,25 +1,49 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { NewTask } from './NewTask';
 import { NoTask } from './NoTask';
 import { Task } from './Task';
 import styles from './TaskBox.module.css';
 import uuid from 'react-uuid';
+import { getList } from "../api";
 
 interface TaskItens{
   id: string;
   content: string;
   isCompleted: boolean;
 }
-
 const taskTypes: TaskItens[] = [];
 
-export function TaskBox() {  
+export function TaskBox() { 
 
   const [tasks, setTasks] = useState(taskTypes);
 
   const [completedTasks, setcompletedTasks] = useState(tasks.filter(task => {
     return task.isCompleted === true;
   }).length);
+
+  useEffect(() => {
+    async function loadToDoList() {
+      try {
+        const taskitens = taskTypes;  
+        const list = await getList();
+          
+        list.map((item: any) =>{
+          taskitens.push({
+            id: uuid(),
+            content: item.description,
+            isCompleted: false 
+          });  
+        });
+
+        setTasks(taskitens);     
+        
+      } catch (error) {
+        
+      }
+    }
+  
+    loadToDoList();
+  }, []);
 
   function onChangeCheckTask(taskId: string){
     const updatingTask = tasks.map(task => {
