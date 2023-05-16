@@ -3,8 +3,7 @@ import { NewTask } from './NewTask';
 import { NoTask } from './NoTask';
 import { Task } from './Task';
 import styles from './TaskBox.module.css';
-import uuid from 'react-uuid';
-import { getList } from "../api";
+import { getList, createToDo } from "../api";
 
 interface TaskItens{
   id: string;
@@ -16,6 +15,7 @@ const taskTypes: TaskItens[] = [];
 export function TaskBox() { 
 
   const [tasks, setTasks] = useState(taskTypes);
+  const [isUpdate, setIsUpdate] = useState(false);
 
   const [completedTasks, setcompletedTasks] = useState(tasks.filter(task => {
     return task.isCompleted === true;
@@ -23,29 +23,19 @@ export function TaskBox() {
 
   useEffect(() => {
     async function loadToDoList() {
-      try {
-        const taskitens = taskTypes;  
+      try {              
         const list = await getList();
-          
-        list.map((item: any) =>{
-          taskitens.push({
-            id: uuid(),
-            content: item.description,
-            isCompleted: false 
-          });  
-        });
-
-        setTasks(taskitens);     
-        
+        setTasks(list);        
       } catch (error) {
-        
+        console.log(error);  
       }
     }
   
     loadToDoList();
-  }, []);
+  }, [isUpdate]);
 
   function onChangeCheckTask(taskId: string){
+    console.log(taskId);
     const updatingTask = tasks.map(task => {
       return task.id === taskId ? {...task, isCompleted: !task.isCompleted} : {...task}
     });
@@ -69,10 +59,12 @@ export function TaskBox() {
     }).length)
   }
 
-  function onAddTask(content: string) {
-    setTasks([...tasks, {id: uuid(),
-                        content: content,
-                        isCompleted: false}]);
+  async function onAddTask(content: string) {
+    const data = {
+      content
+    }
+    await createToDo(data);
+    setIsUpdate(!isUpdate);
   }
 
   return(

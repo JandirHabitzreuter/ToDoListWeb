@@ -1,9 +1,9 @@
 
 import { prisma } from "../../../../database/prismaClient";
 
-export class CreateListUseCase{
+export class UpdateListUseCase{
 
-    async execute(content : string){
+    async execute(content : string, Iscompleted : boolean){
         const list = await prisma.todolist.create({
             data:{
                 content
