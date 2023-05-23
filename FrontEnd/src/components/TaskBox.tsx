@@ -3,7 +3,7 @@ import { NewTask } from './NewTask';
 import { NoTask } from './NoTask';
 import { Task } from './Task';
 import styles from './TaskBox.module.css';
-import { getList, createToDo } from "../api";
+import { getList, createToDo, deleteToDo } from "../api";
 
 interface TaskItens{
   id: string;
@@ -47,16 +47,9 @@ export function TaskBox() {
     }).length)
   }
 
-  function onDeleteTask(taskId: string) {
-    const tasksWithoutDeletingOne = tasks.filter(task => {
-      return task.id != taskId 
-    });
-
-    setTasks(tasksWithoutDeletingOne);
-
-    setcompletedTasks(tasksWithoutDeletingOne.filter(task => {
-      return task.isCompleted === true;
-    }).length)
+  async function onDeleteTask(taskId: string) {
+   await deleteToDo(taskId);
+   setIsUpdate(!isUpdate);
   }
 
   async function onAddTask(content: string) {
