@@ -7,7 +7,7 @@ export class DeleteListController{
       const { id } = request.params;
 
       const deleteListUseCase = new DeleteListUseCase();
-      const list = deleteListUseCase.execute(id);
+      const list = await deleteListUseCase.execute(id);
       return response.json(list);
     }
 } 

@@ -11,7 +11,8 @@ datasource db {
 }
 
 model Todolist {
-  id          String  @id @default(uuid())
+  id          String   @id @default(uuid())
   content     String
-  isCompleted Boolean @default(false)
+  isCompleted Boolean  @default(false)
+  created_at  DateTime @default(now())
 }
