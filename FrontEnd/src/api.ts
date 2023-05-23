@@ -16,8 +16,7 @@ export async function createToDo(data : any) {
   return response.data;
 }
 
-export async function deleteToDo(id : string) {
-  console.log(id);
+export async function deleteToDo(id : string) {  
   const response = await api.delete(`${base_url}/${id}`);
   return response.data;
 }

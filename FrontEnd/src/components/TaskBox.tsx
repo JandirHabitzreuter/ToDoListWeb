@@ -15,16 +15,16 @@ const taskTypes: TaskItens[] = [];
 export function TaskBox() { 
 
   const [tasks, setTasks] = useState(taskTypes);
-  const [isUpdate, setIsUpdate] = useState(false);
+  const [isUpdate, setIsUpdate] = useState(true);
 
   const [completedTasks, setcompletedTasks] = useState(tasks.filter(task => {
     return task.isCompleted === true;
   }).length);
 
-  useEffect(() => {
+  useEffect(() => {    
     async function loadToDoList() {
       try {              
-        const list = await getList();
+        const list = await getList();        
         setTasks(list);        
       } catch (error) {
         console.log(error);  

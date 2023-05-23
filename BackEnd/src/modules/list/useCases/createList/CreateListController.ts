@@ -7,7 +7,7 @@ export class CreateListController{
       const { content } = request.body;
 
       const createListUseCase = new CreateListUseCase();
-      const list = createListUseCase.execute(content);
+      const list = await createListUseCase.execute(content);
       return response.json(list);
     }
 } 
