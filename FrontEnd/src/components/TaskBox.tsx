@@ -3,7 +3,7 @@ import { NewTask } from './NewTask';
 import { NoTask } from './NoTask';
 import { Task } from './Task';
 import styles from './TaskBox.module.css';
-import { getList, createToDo, deleteToDo } from "../api";
+import { getList, createToDo, deleteToDo, updateIsCompletedTodoList } from "../api";
 
 interface TaskItens{
   id: string;
@@ -17,34 +17,23 @@ export function TaskBox() {
   const [tasks, setTasks] = useState(taskTypes);
   const [isUpdate, setIsUpdate] = useState(true);
 
-  const [completedTasks, setcompletedTasks] = useState(tasks.filter(task => {
-    return task.isCompleted === true;
-  }).length);
+  const [completedTasks, setcompletedTasks] = useState(0);
 
   useEffect(() => {    
     async function loadToDoList() {
       try {              
-        const list = await getList();        
-        setTasks(list);        
+        const list = await getList();  
+        setTasks(list);          
       } catch (error) {
         console.log(error);  
       }
-    }
-  
-    loadToDoList();
+    }  
+    loadToDoList();  
   }, [isUpdate]);
 
-  function onChangeCheckTask(taskId: string){
-    console.log(taskId);
-    const updatingTask = tasks.map(task => {
-      return task.id === taskId ? {...task, isCompleted: !task.isCompleted} : {...task}
-    });
-
-    setTasks(updatingTask);
-
-    setcompletedTasks(updatingTask.filter(task => {
-      return task.isCompleted === true;
-    }).length)
+  async function onChangeCheckTask(taskId: string){    
+    await updateIsCompletedTodoList(taskId);
+     setIsUpdate(!isUpdate);
   }
 
   async function onDeleteTask(taskId: string) {

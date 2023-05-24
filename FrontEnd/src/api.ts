@@ -20,3 +20,8 @@ export async function deleteToDo(id : string) {
   const response = await api.delete(`${base_url}/${id}`);
   return response.data;
 }
+
+export async function updateIsCompletedTodoList(id : string) {
+  const response = await api.put(`${base_url}/${id}`);
+  return response.data;
+}
