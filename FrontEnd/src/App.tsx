@@ -10,7 +10,7 @@ function App() {
       <Header />  
 
       <main className={styles.app}>
-        <TaskBox />
+        <TaskBox />        
       </main>    
     </div>
   )
