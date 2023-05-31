@@ -3,7 +3,7 @@ import { NewTask } from './NewTask';
 import { NoTask } from './NoTask';
 import { Task } from './Task';
 import styles from './TaskBox.module.css';
-import { getList, createToDo, deleteToDo, updateIsCompletedTodoList } from "../api";
+import { getList, createToDo, deleteToDo, updateIsCompletedTodoList } from "../routes/toDoList";
 
 interface TaskItens{
   id: string;
